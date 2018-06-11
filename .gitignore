@@ -1,3 +1,4 @@
 .gradle/
 .idea/libraries
+.idea/workspace
 .idea/caches/
