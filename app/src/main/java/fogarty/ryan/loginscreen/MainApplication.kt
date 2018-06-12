@@ -15,7 +15,7 @@ class MainApplication : Application() {
 
         networkComponent = DaggerNetworkComponent.builder()
                 .appModule(AppModule(this))
-                .networkModule(NetworkModule("http://brighthr-api-uat.azurewebsites.net/"))
+                .networkModule(NetworkModule("http://brighthr-api-uat.azurewebsites.net"))
                 .build()
     }
 }
