@@ -2,19 +2,65 @@ package fogarty.ryan.loginscreen.presentation.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import fogarty.ryan.loginscreen.MainApplication
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import fogarty.ryan.loginscreen.R
-import retrofit2.Retrofit
-import javax.inject.Inject
+import fogarty.ryan.loginscreen.presentation.presenters.LoginPresenter
 
-class LoginActivity : AppCompatActivity() {
-    @Inject
-    lateinit var retrofit: Retrofit
+class LoginActivity : AppCompatActivity(), LoginContract.View {
+    lateinit var presenter: LoginPresenter
+
+    private val usernameInput by lazy { findViewById<EditText>(R.id.username) }
+    private val passwordInput by lazy { findViewById<EditText>(R.id.password) }
+    private val loginButton by lazy { findViewById<Button>(R.id.login) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        (application as MainApplication).networkComponent.inject(this)
+        presenter = LoginPresenter()
+        presenter.onViewAttached(this)
+
+        setupViews()
+    }
+
+    override fun onDestroy() {
+        presenter.onViewDetached()
+        super.onDestroy()
+    }
+
+    override fun displayMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun setLoginButtonEnabled(enable: Boolean) {
+        loginButton.isEnabled = enable
+    }
+
+    private fun setupViews() {
+        setLoginButtonEnabled(false)
+
+        usernameInput.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                presenter.username = charSequence?.toString() ?: ""
+            }
+
+            override fun afterTextChanged(p0: Editable?) = Unit
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+        })
+
+        passwordInput.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                presenter.password = charSequence?.toString() ?: ""
+            }
+
+            override fun afterTextChanged(p0: Editable?) = Unit
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+        })
+
+        loginButton.setOnClickListener({ presenter.login() })
     }
 }
