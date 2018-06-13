@@ -1,10 +1,10 @@
 package fogarty.ryan.loginscreen
 
 import android.app.Application
-import fogarty.ryan.loginscreen.dagger.AppModule
-import fogarty.ryan.loginscreen.dagger.DaggerNetworkComponent
-import fogarty.ryan.loginscreen.dagger.NetworkComponent
-import fogarty.ryan.loginscreen.dagger.NetworkModule
+import fogarty.ryan.loginscreen.dagger.modules.AppModule
+import fogarty.ryan.loginscreen.dagger.components.DaggerNetworkComponent
+import fogarty.ryan.loginscreen.dagger.components.NetworkComponent
+import fogarty.ryan.loginscreen.dagger.modules.NetworkModule
 
 class MainApplication : Application() {
     lateinit var networkComponent: NetworkComponent

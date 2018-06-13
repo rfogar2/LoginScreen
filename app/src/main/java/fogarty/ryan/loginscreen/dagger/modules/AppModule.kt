@@ -1,4 +1,4 @@
-package fogarty.ryan.loginscreen.dagger
+package fogarty.ryan.loginscreen.dagger.modules
 
 import android.app.Application
 import dagger.Module

@@ -8,9 +8,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import fogarty.ryan.loginscreen.R
+import fogarty.ryan.loginscreen.dagger.components.DaggerLoginComponent
+import fogarty.ryan.loginscreen.dagger.modules.LoginModule
 import fogarty.ryan.loginscreen.presentation.presenters.LoginPresenter
+import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
+    @Inject
     lateinit var presenter: LoginPresenter
 
     private val usernameInput by lazy { findViewById<EditText>(R.id.username) }
@@ -21,15 +25,24 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        presenter = LoginPresenter()
-        presenter.onViewAttached(this)
+        DaggerLoginComponent.builder()
+                .loginModule(LoginModule())
+                .build()
+                .inject(this)
 
         setupViews()
     }
 
-    override fun onDestroy() {
+    override fun onStart() {
+        super.onStart()
+
+        presenter.onViewAttached(this)
+    }
+
+    override fun onStop() {
         presenter.onViewDetached()
-        super.onDestroy()
+
+        super.onStop()
     }
 
     override fun displayMessage(message: String) {

@@ -1,4 +1,4 @@
-package fogarty.ryan.loginscreen.dagger
+package fogarty.ryan.loginscreen.dagger.modules
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
