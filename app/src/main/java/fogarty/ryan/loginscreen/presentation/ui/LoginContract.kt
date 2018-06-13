@@ -1,8 +1,8 @@
 package fogarty.ryan.loginscreen.presentation.ui
 
 interface LoginContract {
-    interface View {
+    interface View : HasProgressBar {
         fun setLoginButtonEnabled(enable: Boolean)
-        fun displayMessage(message: String)
+        fun displayLoginResponse(responseCode: Int?, userTimeZoneName: String?)
     }
 }

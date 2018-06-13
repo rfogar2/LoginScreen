@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import fogarty.ryan.loginscreen.network.services.BrightHRAccountService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,7 +23,7 @@ class NetworkModule(private val baseURL: String) {
     @Singleton
     internal fun provideGson(): Gson {
         val gsonBuilder = GsonBuilder()
-        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
         return gsonBuilder.create()
     }
 
@@ -34,5 +35,11 @@ class NetworkModule(private val baseURL: String) {
                 .baseUrl(baseURL)
                 .client(okHttpClient)
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideAccountService(retrofit: Retrofit): BrightHRAccountService {
+        return retrofit.create(BrightHRAccountService::class.java)
     }
 }

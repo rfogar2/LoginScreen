@@ -28,6 +28,14 @@
         android:hint="@string/password"
         style="@style/credentialEditText" />
 
+    <ProgressBar
+        android:id="@+id/indeterminateBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyle"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal" />
+
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
@@ -36,7 +44,6 @@
         android:textColor="@color/white"
         android:text="@string/login"
         android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
 </android.support.v7.widget.LinearLayoutCompat >
