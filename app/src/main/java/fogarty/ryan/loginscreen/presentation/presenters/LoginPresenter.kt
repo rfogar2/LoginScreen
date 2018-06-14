@@ -8,9 +8,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.properties.Delegates
 
-class LoginPresenter : BasePresenter<LoginContract.View>() {
-    lateinit var accountService: BrightHRAccountService
-
+class LoginPresenter(private val accountService: BrightHRAccountService) : BasePresenter<LoginContract.View>() {
     var username: String by Delegates.observable("") { _, _, newValue ->
         setLoginButtonEnabled(newValue, password)
     }

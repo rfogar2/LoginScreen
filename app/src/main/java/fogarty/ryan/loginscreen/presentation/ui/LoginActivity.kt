@@ -31,6 +31,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
         DaggerLoginComponent.builder()
                 .loginModule(LoginModule())
+                .networkComponent((application as MainApplication).networkComponent)
                 .build()
                 .inject(this)
 
@@ -40,7 +41,6 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     override fun onStart() {
         super.onStart()
 
-        presenter.accountService = (application as MainApplication).networkComponent.exposeAccountService()
         presenter.onViewAttached(this)
     }
 
